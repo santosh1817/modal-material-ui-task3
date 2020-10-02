@@ -2,6 +2,10 @@
 import React,{useState} from 'react'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import axios from 'axios'
+import { connect } from 'react-redux';
+import  {setModalwindow}  from '../action/modalwindow';
+import { useSelector } from 'react-redux'
+
 const Add=(props)=>{
   const [data,setdata]=useState([])
   const  [num,setnum]=useState('');
@@ -9,6 +13,14 @@ const Add=(props)=>{
   const [author,setauthor]=useState('')
   const [publisher,setpublisher]=useState('')
   const [stock,setstock]=useState('')
+
+
+  //const counter = useSelector(state => state.modalwindow.item)
+  const handleClose=(e)=>{
+    e.preventDefault()
+    props.setModalwindow(false)
+    
+  }
 
   const handleSubmit=(e)=>{
       e.preventDefault()
@@ -23,8 +35,6 @@ const Add=(props)=>{
     
     axios.post('http://localhost:3005/data/add',formData)
     .then(response=>{
-      console.log(formData,'form')
-      console.log(response.data,'in post')
       setdata(response.data)
       props.history.push('/all')
     })
@@ -54,11 +64,20 @@ const Add=(props)=>{
               <Label>Stock</Label>
               <Input type="number" name="stock"  value={stock} onChange={e=>setstock(e.target.value)}/>
             </FormGroup>
-            <Button className="btn btn-success"> Save</Button> <Button className="btn btn-danger">Close</Button>
+            <Button className="btn btn-success"> Save</Button> 
+            <Button className="btn btn-danger" onClick={handleClose}>Close</Button>
         </Form>
     )
 }
-export default Add
+
+const mapStateToProps = state => {
+  return {
+      
+      open: state.modalwindow.item
+  };
+}
+
+export default connect(mapStateToProps,{setModalwindow})(Add);
 // import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 // import Popover from '@material-ui/core/Popover';

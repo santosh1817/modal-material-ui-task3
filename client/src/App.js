@@ -3,10 +3,14 @@ import Form from './components/skills'
 import Add from './components/Add'
 import Edit from './components/Edit'
 import {BrowserRouter, Route,Link,Switch} from 'react-router-dom'
+import {connect} from 'react-redux'
+import store from './store/store';
+import { Provider } from 'react-redux';
 
 const App=()=>{
   return(
-    <div>
+    <Provider store={store}>
+      <div>
      
      <BrowserRouter>
      
@@ -20,6 +24,8 @@ const App=()=>{
      
       
     </div>
+    </Provider>
+    
   )
 }
 

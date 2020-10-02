@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const Edit=(props)=>{
   const [data,setdata]=useState([])
-  const  [num,setnum]=useState('');
+  const [num,setnum]=useState('');
   const [title,settitle]=useState('')
   const [author,setauthor]=useState('')
   const [publisher,setpublisher]=useState('')
@@ -13,9 +13,9 @@ const Edit=(props)=>{
 
 
   useEffect(()=>{
-    const id=props.match.params.id
-    console.log(id,'in id')
-    axios.get(`http://localhost:3005/data/${id}`,{
+    //const id=props.match.params.id
+    //console.log(id,'in id')
+    axios.get(`http://localhost:3005/data/`,{
         headers:{
             'x-auth':localStorage.getItem('token')
         }
@@ -23,9 +23,10 @@ const Edit=(props)=>{
     .then((response)=>{
         
         setdata(response.data)
+        console.log('res',response.data)
     })
     .catch(err=>console.log(err))
-},[])
+  },[])
 
 
   const handleSubmit=(e)=>{
@@ -54,7 +55,7 @@ const Edit=(props)=>{
             <h2>Edit Record</h2>
             <FormGroup>
               <Label>Num</Label>
-              <Input type="text" name="num"  value={num} onChange={e=>setnum(e.target.value)}/>
+              <Input type="text" name="num" value={num} onChange={e=>setnum(e.target.value)}/>
             </FormGroup>
             <FormGroup>
               <Label>Title</Label>
